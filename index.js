@@ -1,14 +1,18 @@
 const express = require("express");
-const app = express();
-// eslint-disable-next-line no-unused-vars
-const port = 3000;
 
-app.get("/", (req, res) => {
-  res.send("Hello, world!");
-});
+const startServer = () => {
+  const app = express();
+  const port = 3000;
 
-app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
-});
+  app.get("/", (req, res) => {
+    res.send("Hello, world!");
+  });
 
-module.exports = app;
+  const server = app.listen(port, () => {
+    console.log(`App listening at http://localhost:${port}`);
+  });
+
+  return { server, app };
+};
+
+module.exports = startServer;
