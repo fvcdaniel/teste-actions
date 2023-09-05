@@ -1,0 +1,26 @@
+name: Fullstack CI/CD
+
+on:
+  push:
+    branches:
+        - main
+
+permissions:
+    id-token: write #requesting JTW
+    contents: read # actions/checkout
+
+jobs:
+  build:
+    name: "Deploy app"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-region: us-east-2
+          role-to-assume: arn:aws:iam::758178873351:oidc-provider/token.actions.githubusercontent.com
+
+      - run: aws status
