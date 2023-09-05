@@ -22,5 +22,13 @@ jobs:
         with:
           aws-region: us-east-2
           role-to-assume: arn:aws:iam::758178873351:role/github_actions_role
+          
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
 
-      - run: aws status
+      - name: Build and push image
+        run: |
+          docker build -t teste .
+          docker tag teste:latest 758178873351.dkr.ecr.us-east-2.amazonaws.com/teste:latest
+          docker push 758178873351.dkr.ecr.us-east-2.amazonaws.com/teste:latest
